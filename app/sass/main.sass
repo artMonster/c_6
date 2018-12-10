@@ -1,0 +1,64 @@
+@import "vars"
+@import "fonts"
+@import "libs"
+
+::placeholder
+	color: #666
+
+::selection
+	background-color: $accent
+	color: #fff
+
+body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.65
+	font-family: $default-font
+	overflow-x: hidden
+	color: $text
+	input, textarea
+		border: #666 1px solid
+		outline: none
+		&:focus:required:invalid
+			border-color: red
+		&:required:valid
+			border-color: green
+
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+	&.img-width
+		width: 100%
+
+.text-center
+	text-align: center
+
+b, strong
+	font-weight: bold
+
+form
+	max-width: 320px
+	margin: 0 auto
+	text-align: center
+	label
+		position: absolute
+		top: 0px
+		font-size: 13px
+		color: rgba(34,34,34,.5)
+		width: auto
+		right: 15px
+		text-align: right
+	.intl-tel-input
+		background: transparent
+		width: 100%
+	input
+		background: transparent
+		width: 100%
+		border: none
+		border-bottom: 1px solid 
+		&.active+label
+			color: green
+
+@import "media" // Always at the end
