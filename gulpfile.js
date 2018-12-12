@@ -36,7 +36,11 @@ gulp.task('styles', function() {
 
 gulp.task('js', function() {
     return gulp.src([
-            'app/libs/intlTelInput/intlTelInput.js',
+            //'app/libs/jquery/dist/jquery.min.js',
+            //'app/libs/bootstrap/bootstrap.js',
+            //'app/libs/intlTelInput/intlTelInput.js',
+            //'app/libs/magnific-popup/jquery.magnific-popup.min.js',
+            //'app/libs/slick/slick.min.js',
 
             //'app/js/common.js', // Always at the end
         ])

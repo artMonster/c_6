@@ -41,14 +41,9 @@ p
 	margin: 0
 .upp
 	text-transform: uppercase
-.cb
-	color: $blue
-.cg
-	color: $gold
-.cw
-	color: $white
-.ct
-	color: $text
+
+a.bt
+	text-decoration: none
 .bt
 	border-radius: 38px
 	padding: 16px 32px 15px 32px
@@ -61,7 +56,7 @@ p
 	margin-top: 10px
 	margin-bottom: 10px
 	font-weight: bold
-	&:hover
+	&:hover, &.active
 		background-color: $gold
 		color: $blue
 .bt-play
@@ -216,30 +211,44 @@ h1
 .h2
 	font-family: $accent-font
 	font-size: 60px
-	text-align: center
 	text-transform: uppercase
 	font-weight: bold
 	margin-bottom: 40px
 .h3
 	font-family: $accent-font
 	font-size: 36px
-	text-align: center
 	text-transform: uppercase
 	font-weight: bold
 	margin-bottom: 40px
 .section
 	padding-top: 80px
 	padding-bottom: 80px
-	&.bord
-		border-radius: 40rem/8rem
-		background-color: $white
-		border-top-left-radius: 0
-		border-top-right-radius: 0
+.bord
+	border-radius: 40rem/8rem
+	background-color: $white
+	border-top-left-radius: 0
+	border-top-right-radius: 0
+	position: relative
+	z-index: 2
 .s-dark
-	.h2
-		color: $gold
 	p
 		color: $white
+	.bt
+		border-radius: 38px
+		padding: 16px 32px 15px 32px
+		font-size: 24px
+		background-color: $gold
+		border: 0
+		color: $blue
+		z-index: 22
+		position: relative
+		margin-top: 10px
+		margin-bottom: 10px
+		font-weight: bold
+		&:hover
+			background-color: $blue
+			color: $gold
+
 header
 	background-image: url('../img/header.jpg')
 	background-repeat: no-repeat
@@ -255,17 +264,45 @@ header
 .header-play, .header-play i 
 	transition: all .5s ease-out
 .sec01
-	background-image: url(../img/sec01.jpg)
+	background-image: url('../img/sec01.jpg')
 	background-position: 50% 100%
 	background-size: cover
 .abz
 	margin-bottom: 20px
 .sec02
-	background-image: url(../img/sec02.jpg)
+	background-image: url('../img/sec02.jpg')
 	background-position: 45% 65%
 	background-repeat: no-repeat
+	z-index: 3
 .sec03
-	background-image: url(../img/sec03.jpg)
+	background-image: url('../img/sec03.jpg')
+	background-position: 50% 50%
+	background-repeat: no-repeat
+	background-size: cover
+	margin-top: -130px
+	padding-top: 200px
+.sec05
+	background-image: url('../img/sec05.jpg')
+	background-position: 50% 50%
+	background-repeat: no-repeat
+	background-size: cover
+.sec07
+	background-image: url('../img/sec07.jpg')
+	background-position: 50% 50%
+	background-repeat: no-repeat
+	background-size: cover
+.sec06
+	background-image: url('../img/sec06.jpg')
+	background-position: 50% 50%
+	background-repeat: no-repeat
+	background-size: cover
+.sec010
+	background-image: url('../img/sec010.jpg')
+	background-position: 50% 50%
+	background-repeat: no-repeat
+	background-size: cover
+.sec011
+	background-image: url('../img/sec011.jpg')
 	background-position: 50% 50%
 	background-repeat: no-repeat
 	background-size: cover
@@ -283,4 +320,76 @@ header
 	margin-top: 8px
 	vertical-align: middle
 	padding-top: 3px
+	display: inline-block
+.nav
+	.bt
+		margin-right: 20px
+.sec09
+	.h3
+		font-size: 24px
+	.card-body
+		.fz14
+			margin-bottom: 10px
+.cb
+	color: $blue!important
+.cg
+	color: $gold!important
+.cw
+	color: $white!important
+.ct
+	color: $text!important
+footer
+	background-position: 50% 50%
+	background-size: cover
+	padding-top: 160px
+	margin-top: -120px
+	padding-bottom: 10px
+	z-index: 1
+	background-color: $blue
+	.logo
+		margin-top: 10px
+	.copy
+		margin-bottom: 20px
+	span,
+	p
+		font-size: 12px
+		margin-bottom: 0
+		color: $white
+	a
+		color: $gold
+		font-size: 12px
+		&:hover
+			color: #fff
+	.contacts
+		margin-bottom: 10px
+		padding-bottom: 20px
+.white-popup
+	background-color: white
+	padding: 30px 30px 20px 30px
+	text-align: left
+	max-width: 400px
+	margin: 40px auto
+	position: relative
+	border-top: 6px solid $blue
+	.closeInfo
+		display: none!important
+.term-popup
+	max-width: 1200px
+	width: 100%
+	margin: 40px auto
+	position: relative
+	padding: 20px 30px 60px 30px
+	background-color: $white
+	p
+		margin-bottom: 10px
+		strong
+			margin-top: 20px
+			display: inline-block
+.mfp-close-btn-in .mfp-close
+	width: 52px
+	height: 52px
+	background-color: transparent
+.mfp-close-btn-in .mfp-close:hover+.closeInfo
+	display: inline-block
+
 @import "media" // Always at the end
