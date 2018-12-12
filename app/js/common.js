@@ -1,259 +1,49 @@
-var tag = document.createElement('script');
-              tag.src = 'https://www.youtube.com/player_api';
-          firstScriptTag = document.getElementsByTagName('script')[0];
-          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-
-    var playerDefaults = {autohide: 1, modestbranding: 0, rel: 0, showinfo: 0, controls: 0, disablekb: 1, enablejsapi: 0, iv_load_policy: 3, loop: 1};
-    var tv;
-    var vid = [{'videoId': 'C4WOXQgj0E0', 'startSeconds': 0, 'suggestedQuality': 'hd720'}],
-    randomVid = Math.floor(Math.random() * vid.length),
-    currVid = randomVid;
-
-function onYouTubePlayerAPIReady(){
-  tv = new YT.Player('tv', {events: {'onReady': onPlayerReady}, playerVars: playerDefaults});
-}
-
-$('.hi em:last-of-type').html(vid.length);
-
-
-$('body').css('opacity', '1');
-
-            onPlayerPlay();
-            onloadVideo();
-            onPlayerPause();
-
-
-function onPlayerReady(){
-  tv.mute();
-  vidRescale();
-}
-function onPlayerPause(){
-  tv.pauseVideo();
-}
-function onloadVideo() {
- tv.loadVideoById(vid[currVid]);
-}
-
-function onPlayerPlay(){
-  tv.playVideo();
-//tv.seekTo(vid[currVid].startSeconds);
-}
-
-function onPlayerStateChange(e) {
-  //console.log(e.data);
-
-  /*if (e.data === 1){
-    $('#tv').addClass('active');
-    $('.hi em:nth-of-type(2)').html(currVid + 1);
-  } else if (e.data === 2){
-    $('#tv').removeClass('active');
-    if(currVid === vid.length - 1){
-      currVid = 0;
-    } else {
-      currVid++;  
-    }
-  }*/
-}
-
-function vidRescale(){
-
-  var w = $(window).width()+200,
-    h = $(window).height()+200;
-
-  if (w/h > 16/9){
-    tv.setSize(w, w/16*9);
-    $('.tv .screen').css({'left': '0px'});
-  } else {
-    tv.setSize(h/9*16, h);
-    $('.tv .screen').css({'left': -($('.tv .screen').outerWidth()-w)/2});
-  }
-}
-
-/*
-
-$('.hi span:first-of-type').on('click', function(){
-  $('#tv').toggleClass('mute');
-  $('.hi em:first-of-type').toggleClass('hidden');
-  if($('#tv').hasClass('mute')){
-    tv.mute();
-  } else {
-    tv.unMute();
-  }
-  if($('#tv').hasClass('pause')){
-    tv.pauseVideo();
-  } else {
-   tv.seekTo(vid[currVid].startSeconds);
-  }
-
-});
-
-$('.hi span:last-of-type').on('click', function(){
-  $('.hi em:nth-of-type(2)').html('~');
-  tv.pauseVideo();
-});
-*/
-
-//$(window).on('load resize', function(){
-  
-//});
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  $('.callb-popup').magnificPopup({
-    items: {
-        src: '#callb-form',
-        type: 'inline'
-    },
-    tClose: 'Закрыть [Esc]',
-    closeMarkup: '<button title="%title%" type="button" class="mfp-close bt">×</button><span class="closeInfo">Как только вы закроете это окно, <br>с вероятностью 99% данная информация станет вам недоступной.</span>',
-    fixedContentPos: false,
-    fixedBgPos: false,
-    removalDelay: 300, //delay removal by X to allow out-animation
-    callbacks: {
-      beforeOpen: function() {
-        this.st.mainClass = this.st.el.attr('data-effect');
-        
-      }
-    },
-  });
-
-  $(document).on('click', '.popup-modal-dismiss', function (e) {
-    e.preventDefault();
-    $.magnificPopup.close();
-  });
-
-  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
-
-    function preventDefault(e) {
-      e = e || window.event;
-      if (e.preventDefault)
-          e.preventDefault();
-      e.returnValue = false;  
-    }
-
-    function preventDefaultForScrollKeys(e) {
-        if (keys[e.keyCode]) {
-            preventDefault(e);
-            return false;
-        }
-    }
-
-    function disableScroll() {
-      if (window.addEventListener) // older FF
-          window.addEventListener('DOMMouseScroll', preventDefault, false);
-      window.onwheel = preventDefault; // modern standard
-      window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-      window.ontouchmove  = preventDefault; // mobile
-      document.onkeydown  = preventDefaultForScrollKeys;
-    }
-
-    function enableScroll() {
-        if (window.removeEventListener)
-            window.removeEventListener('DOMMouseScroll', preventDefault, false);
-        window.onmousewheel = document.onmousewheel = null; 
-        window.onwheel = null; 
-        window.ontouchmove = null;  
-        document.onkeydown = null;  
-    }
-
-
-  $( document ).ready(function() {
-
-    $('[type=tel]').intlTelInput({
-        allowExtensions: false,
-        autoFormat: true,
-        autoHideDialCode: false,
-        autoPlaceholder: false,
-        defaultCountry: "auto",
-         geoIpLookup: function(callback) {
-           $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
-             var countryCode = (resp && resp.country) ? resp.country : "";
-             callback(countryCode);
-           });
-         },
-        nationalMode: false,
-        numberType: 'MOBILE',
-        preferredCountries: ['ua', 'ru', 'by','us'],
-        utilsScript: 'js/utils.js'
-      });
-
-    //
-
-
-    
-
-
-    var $count = $('#count');
-    var countNumb = 1;
-
-    $('#count').countdown("2018/10/10", function(event) {
-      $(this).html(event.strftime('<h3>%H:%M:%S</h3>'));
-      if (event.type == 'finish') {
-        $('#cena').text('51 000 руб.');
-        countNumb = 2;
-      }
-    });
-
-
-    if (localStorage.un && localStorage.ue) {
-      $('input[name=name]').val(localStorage.un);
-      $('input[name=email]').val(localStorage.ue);
-    }
-
-    if (localStorage.up) {
-      $('input[name=phone]').val(localStorage.up);
-    }
-
-  });
-  
-   $('.anchor').click(function() {
-      var btn = +$(this).data('href');
-
-    var dataBtn = $(this).data('btn');
-    $('input[name=l_btn]').val(dataBtn);
-
-
-    //if (vievport_w < 992) {
-      /*
-      var btn = $(this).data('href');
-      var target = $('#'+btn);
-      if (target.length) {
-        $('html,body').animate({
-          scrollTop: target.offset().top
-        }, 1500);
-      }
-      return false;
-   // }*/
-  });
-
-
-
-
-
-
 $(function() {
 
     $(document).ready(function() {
 
+        $('.anchor').click(function() {
+      var btn = $(this).data('href');
+      var target = $(btn);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        $('html,body').animate({
+          scrollTop: target.offset().top + 5
+        }, 1500);
+        return false;
+    });
 
+        var vievport_w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  var vievport_h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
+  if (vievport_w > 1200) {
+    var ph = $('#ph').height();
+    $('.card-body').css('min-height', ph);
+  }
 
+  $('#nav-tab-one').html('<i class="fas fa-atom"></i> 1');
+  $('#nav-tab-two').html('<i class="fas fa-atom"></i> 2');
+  $('#nav-tab-three').html('<i class="fas fa-atom"></i> 3');
 
+        
 
-
-
-
+        $('.popup').magnificPopup({
+    type: 'inline',
+    fixedContentPos: false,
+    fixedBgPos: false,
+    overflowY: 'auto',
+    closeBtnInside: true,
+    preloader: true,
+    midClick: true,
+    removalDelay: 300,
+    mainClass: 'mfp-zoom-in',
+    callbacks: {
+      beforeOpen: function() {
+        this.st.mainClass = this.st.el.attr('data-effect');
+        $('#info_inp').val(this.st.el.attr('data-info'));
+        $('#price_inp').val(this.st.el.attr('data-price'));
+      }
+    }
+  });
   $('.popup-youtube').magnificPopup({
     type: 'iframe',
     removalDelay: 160,
@@ -278,9 +68,73 @@ $(function() {
           mainClass: 'mfp-zoom-in',
           callbacks: {
       beforeOpen: function() {
+              $('#cont-history-header').html('');
+              $('#cont-history').html('');
               this.st.mainClass = this.st.el.attr('data-effect');
-              $('#info_inp').val(this.st.el.attr('data-info'));
-              $('#price_inp').val(this.st.el.attr('data-price'));
+              var name, ava, social, cont;
+              var dataBtn = this.st.el.attr('data-btn');
+
+              if (dataBtn == '1') {
+                name = '<p class="fz24 my-1">Елена Кондакова</p><p class="fz14">г. Якутск (Россия)</p>';
+                ava = '<img src="img/s01.jpg" alt="" class="img-fluid rounded-circle ">';
+                social = '<hr><a href="https://www.instagram.com/s_e_l_e_n_a_11_18_19/" target="_blank"><i class="fab fa-instagram"></i></a>';
+                cont = '<p class="fz24 bold">Однажды в моей жизни наступили тяжелые времена.</p>';
+                cont += '<p>У каждого были такие моменты. Все казалось безрадостным. В отчаянии я обратилась к Вселенной за помощью. И тут мне приходит реклама курса Виктории. Это ли не добрый знак? И снова удар — реклама в инстаграм затерялась. Ищу-ищу, не могу найти. И вот, буквально за несколько дней до начала курса она снова промелькнула у меня в ленте. Тут уж я за нее ухватилась и не упустила такую возможность. Записалась на курс по Финхилингу. Сразу хочу начать с благодарностей. Благодарю команду Виктории Шуриной, что позволяете проходить курсы в рассрочку. За то, что помогаете поверить в себя с самого начала общения с вами. Без этого сложно было бы переступить через свое старое мышление. С головой окунуться в эти новые знания, ведущие внутрь к себя, позволяя распаковывать свои же ресурсы.</p>';
+                cont += '<p class="fz24 bold">Я была в жуткой непонятной депрессии</p>';
+                cont += '<p>Сидела дома в четырех стенах после рождения 4-го ребенка. Много обучалась, но применения знаний не было. Курсы себя не оправдывали и не окупали. И кстати, я перешла на учебу к Виктории, не закончив другое недешевое обучение. Я решила для себя так: знания из предыдущего курса мне помогут, но дальше надо искать новые пути. И действительно, то, чему меня научили там, пригодилось мне, чтобы окупить курс Виктории и даже больше. Самое смешное, что в процессе обучения я все время засыпала. Зато моя жизнь сразу начинала меняться, будто Ангелы мои проснулись и начали меня баловать. Сейчас то же самое. Стоит мне открыть свой личный кабинет, в котором очень много информации, и прослушать любой урок Виктории, как на завтра уже происходят изменения. Вика для меня чудо. Очень ее люблю. И ее помощницу Елену, которая постоянно держит связь и все очень грамотно и доходчиво объясняет. И главное, как чувствует и появляется именно в тот момент, когда нужно. Знания, которые я получила от Виктории, пока применяю только на себе. Повторно слушаю уроки и прохожу практики. Хочу в голове уложить все по полочкам и только потом доносить до людей</p>';
+                cont += '<p class="fz24 bold">Моя депрессия ушла</p>';
+                cont += '<p>Результаты от обучения не заставили себя долго ждать. Уже через месяц мое подавленное состояние исчезло. Как оказалось, это была моя стена и я сама ее воздвигла перед собой. Это я осознала на парных практиках. Благодаря другим ученицам Виктории поняла, что сама себя уничтожала изнутри. Но теперь все по-другому. Вижу свое будущее полным изобилия, любви и благодарности. Легким и с возможностью помогать многим людям. Просто приходите к Виктории на обучение. Ничего не ожидайте. Все внимание на себя и только на себя. И жизнь раскроет перед вами новые границы, возможности, о которых вы и не знали, поэтому и не просили. Я бы хотела пожелать Виктории и ее команде процветания, цветения и благоухания. Пусть аромат вашей Души наполнит весь Мир. Очень благодарна судьбе за встречу с вами. Рекомендую многим, но кто-то готов, а кто-то нет. Знаю, что на моем пути со мной мои Ангелы. Я никогда не ошибаюсь в людях. Живу в полном доверии к существованию, а оно в ответ меня балует лучшими людьми с наивысшими вибрациями. За что безмерно Благодарна! </p>';
+              }
+
+              if (dataBtn == '2') {
+                name = '<p class="fz24 my-1">Юна (Нина Захарова)</p><p class="fz14">г. Серпухов Московской области</p>';
+                ava = '<img src="img/s02.jpg" alt="" class="img-fluid rounded-circle ">';
+                social = '<hr><a href="https://www.instagram.com/una_hiller/" target="_blank"><i class="fab fa-instagram"></i></a>';
+cont = '<p>С Викторией Шуриной я познакомилась (заочно) давно, когда она только начинала и снимала видео о деньгах. Еще тогда подумала — здорово было бы научиться быть богатой. </p>';
+cont += '<p>С тех пор я научилась многому. Смотрю все видеоновинки от Виктории, а недавно окончила курсы "Финансовое целительство".</p>';
+cont += '<p>У меня есть своя компания по изготовлению запчастей к оборудованию, и еще я веду прием, как Исцеляющая. Поэтому все курсы Виктории Шуриной помогают мне в работе из-за “нашпигованности” идеями: свежими, новаторскими и искрящимися энергиями. Меня это вдохновляет на новые открытия в исцелении.</p>';
+cont += '<p>Благодарю, Благодарю, Благодарю!!!</p>';
+cont += '<p>Давно хотелось поучиться у Виктории, но было много планов на получение других знаний и, наконец, решилась. Считаю, что по деньгам и целительству Виктория лучшая! </p>';
+cont += '<p>Во время учебы и после со мной происходили всякие чудеса</p>';
+cont += '<p>Для меня у Виктории идеально подходящая подача, поэтому все давалось легко. И да, со мной стали происходить удивительные вещи. Я вдруг начинала понимать многие события, происходящие в моей жизни. Мое сознание  менялось каждый час и нет этому предела. </p>';
+cont += '<p>Денег стало больше и изменилось соотношение источников их получения. Сразу захотелось удорожить свой рабочий час. По сути изменилось все. Теперь я могу обучать людей правильно относиться к деньгам и приумножать их.</p>';
+cont += '<p>Трансформации у Вики на курсе просто невероятные. Собиралась улучшить свои финансы и научиться обучать этому, а взамен получила  раскрытие сознания и открыла много новых способов обогащения.</p>';
+cont += '<p>После первого же урока и всех последующих я исцеляла финансы своих клиентов, включила это в общую систему, по которой исцеляю. Результат есть всегда, правда, победами это назвать трудно, так как хочется большего. Но многие пошли учиться дальше, как приумножать деньги.</p>';
+cont += '<p>Человеческое сознание — интересный механизм с двойственной природой: он материален и божественен одновременно. Никогда доподлинно неизвестно, как он расширился, но после учебы всегда видны результаты заложенных знаний. Все всегда легко. Я в потоке и все клиенты в потоке. Передать эти ощущения простыми словами невозможно.</p>';
+cont += '<p>Не собираюсь останавливаться на достигнутом</p>';
+cont += '<p>Все знания, которые я почерпнула у Вики и все инсайты, последовавшие за этим, я постоянно использую в своей работе и считаю их драгоценными. Ведь они реально меняют жизнь людей мгновенно.</p>';
+cont += '<p>В будущем вижу себя Исцеляющей — массово исцеляю людей от рака и других "неизлечимых" болезней.</p>';
+cont += '<p>Хотите изменить к лучшему свою жизнь? Не раздумывайте. Идите учиться к Вике. Считаю это наиболее коротким путем к расширению сознания, а Вику — искусным Учителем.</p>';
+cont += '<p>Благодарю за ее способность в своей учебе соединять воедино божественное и земное, логику и волшебство. Профессор Дамблдор аплодировал бы вам! Благодарю также вашу команду за слаженность действий, четкость, доброжелательность и комфорт.</p>';
+cont += '<p>БЛАГОДАРЮ, БЛАГОДАРЮ, БЛАГОДАРЮ!!!</p>';
+              }
+
+              if (dataBtn == '3') {
+                name = '<p class="fz24 my-1">Елена Кондакова</p><p class="fz14">г. Якутск (Россия)</p>';
+                ava = '<img src="img/s01.jpg" alt="" class="img-fluid rounded-circle ">';
+                social = '<hr><a href="https://www.instagram.com/s_e_l_e_n_a_11_18_19/" target="_blank"><i class="fab fa-instagram"></i></a>';
+                cont = '<p class="fz24 bold">Однажды в моей жизни наступили тяжелые времена.</p>';
+                cont += '<p>У каждого были такие моменты. Все казалось безрадостным. В отчаянии я обратилась к Вселенной за помощью. И тут мне приходит реклама курса Виктории. Это ли не добрый знак? И снова удар — реклама в инстаграм затерялась. Ищу-ищу, не могу найти. И вот, буквально за несколько дней до начала курса она снова промелькнула у меня в ленте. Тут уж я за нее ухватилась и не упустила такую возможность. Записалась на курс по Финхилингу. Сразу хочу начать с благодарностей. Благодарю команду Виктории Шуриной, что позволяете проходить курсы в рассрочку. За то, что помогаете поверить в себя с самого начала общения с вами. Без этого сложно было бы переступить через свое старое мышление. С головой окунуться в эти новые знания, ведущие внутрь к себя, позволяя распаковывать свои же ресурсы.</p>';
+                cont += '<p class="fz24 bold">Я была в жуткой непонятной депрессии</p>';
+                cont += '<p>Сидела дома в четырех стенах после рождения 4-го ребенка. Много обучалась, но применения знаний не было. Курсы себя не оправдывали и не окупали. И кстати, я перешла на учебу к Виктории, не закончив другое недешевое обучение. Я решила для себя так: знания из предыдущего курса мне помогут, но дальше надо искать новые пути. И действительно, то, чему меня научили там, пригодилось мне, чтобы окупить курс Виктории и даже больше. Самое смешное, что в процессе обучения я все время засыпала. Зато моя жизнь сразу начинала меняться, будто Ангелы мои проснулись и начали меня баловать. Сейчас то же самое. Стоит мне открыть свой личный кабинет, в котором очень много информации, и прослушать любой урок Виктории, как на завтра уже происходят изменения. Вика для меня чудо. Очень ее люблю. И ее помощницу Елену, которая постоянно держит связь и все очень грамотно и доходчиво объясняет. И главное, как чувствует и появляется именно в тот момент, когда нужно. Знания, которые я получила от Виктории, пока применяю только на себе. Повторно слушаю уроки и прохожу практики. Хочу в голове уложить все по полочкам и только потом доносить до людей</p>';
+                cont += '<p class="fz24 bold">Моя депрессия ушла</p>';
+                cont += '<p>Результаты от обучения не заставили себя долго ждать. Уже через месяц мое подавленное состояние исчезло. Как оказалось, это была моя стена и я сама ее воздвигла перед собой. Это я осознала на парных практиках. Благодаря другим ученицам Виктории поняла, что сама себя уничтожала изнутри. Но теперь все по-другому. Вижу свое будущее полным изобилия, любви и благодарности. Легким и с возможностью помогать многим людям. Просто приходите к Виктории на обучение. Ничего не ожидайте. Все внимание на себя и только на себя. И жизнь раскроет перед вами новые границы, возможности, о которых вы и не знали, поэтому и не просили. Я бы хотела пожелать Виктории и ее команде процветания, цветения и благоухания. Пусть аромат вашей Души наполнит весь Мир. Очень благодарна судьбе за встречу с вами. Рекомендую многим, но кто-то готов, а кто-то нет. Знаю, что на моем пути со мной мои Ангелы. Я никогда не ошибаюсь в людях. Живу в полном доверии к существованию, а оно в ответ меня балует лучшими людьми с наивысшими вибрациями. За что безмерно Благодарна! </p>';
+              }
+
+              if (dataBtn == '4') {
+                name = '<p class="fz24 my-1">Елена Кондакова</p><p class="fz14">г. Якутск (Россия)</p>';
+                ava = '<img src="img/s01.jpg" alt="" class="img-fluid rounded-circle ">';
+                social = '<hr><a href="https://www.instagram.com/s_e_l_e_n_a_11_18_19/" target="_blank"><i class="fab fa-instagram"></i></a>';
+                cont = '<p class="fz24 bold">Однажды в моей жизни наступили тяжелые времена.</p>';
+                cont += '<p>У каждого были такие моменты. Все казалось безрадостным. В отчаянии я обратилась к Вселенной за помощью. И тут мне приходит реклама курса Виктории. Это ли не добрый знак? И снова удар — реклама в инстаграм затерялась. Ищу-ищу, не могу найти. И вот, буквально за несколько дней до начала курса она снова промелькнула у меня в ленте. Тут уж я за нее ухватилась и не упустила такую возможность. Записалась на курс по Финхилингу. Сразу хочу начать с благодарностей. Благодарю команду Виктории Шуриной, что позволяете проходить курсы в рассрочку. За то, что помогаете поверить в себя с самого начала общения с вами. Без этого сложно было бы переступить через свое старое мышление. С головой окунуться в эти новые знания, ведущие внутрь к себя, позволяя распаковывать свои же ресурсы.</p>';
+                cont += '<p class="fz24 bold">Я была в жуткой непонятной депрессии</p>';
+                cont += '<p>Сидела дома в четырех стенах после рождения 4-го ребенка. Много обучалась, но применения знаний не было. Курсы себя не оправдывали и не окупали. И кстати, я перешла на учебу к Виктории, не закончив другое недешевое обучение. Я решила для себя так: знания из предыдущего курса мне помогут, но дальше надо искать новые пути. И действительно, то, чему меня научили там, пригодилось мне, чтобы окупить курс Виктории и даже больше. Самое смешное, что в процессе обучения я все время засыпала. Зато моя жизнь сразу начинала меняться, будто Ангелы мои проснулись и начали меня баловать. Сейчас то же самое. Стоит мне открыть свой личный кабинет, в котором очень много информации, и прослушать любой урок Виктории, как на завтра уже происходят изменения. Вика для меня чудо. Очень ее люблю. И ее помощницу Елену, которая постоянно держит связь и все очень грамотно и доходчиво объясняет. И главное, как чувствует и появляется именно в тот момент, когда нужно. Знания, которые я получила от Виктории, пока применяю только на себе. Повторно слушаю уроки и прохожу практики. Хочу в голове уложить все по полочкам и только потом доносить до людей</p>';
+                cont += '<p class="fz24 bold">Моя депрессия ушла</p>';
+                cont += '<p>Результаты от обучения не заставили себя долго ждать. Уже через месяц мое подавленное состояние исчезло. Как оказалось, это была моя стена и я сама ее воздвигла перед собой. Это я осознала на парных практиках. Благодаря другим ученицам Виктории поняла, что сама себя уничтожала изнутри. Но теперь все по-другому. Вижу свое будущее полным изобилия, любви и благодарности. Легким и с возможностью помогать многим людям. Просто приходите к Виктории на обучение. Ничего не ожидайте. Все внимание на себя и только на себя. И жизнь раскроет перед вами новые границы, возможности, о которых вы и не знали, поэтому и не просили. Я бы хотела пожелать Виктории и ее команде процветания, цветения и благоухания. Пусть аромат вашей Души наполнит весь Мир. Очень благодарна судьбе за встречу с вами. Рекомендую многим, но кто-то готов, а кто-то нет. Знаю, что на моем пути со мной мои Ангелы. Я никогда не ошибаюсь в людях. Живу в полном доверии к существованию, а оно в ответ меня балует лучшими людьми с наивысшими вибрациями. За что безмерно Благодарна! </p>';
+              }
+
+              $('#cont-history-header').append(ava + name);
+              $('#cont-history').append(cont + social);
             }
           }
     });
@@ -308,7 +162,7 @@ $(function() {
             slidesToShow: 1,
             arrows: false,
             infinite: true,
-            adaptiveHeight: true,
+            //adaptiveHeight: true,
             dots: false,
         });
 
@@ -324,122 +178,4 @@ $(function() {
             }
         });
     });
-});
-$(function() {
-
-    var input = $('input');
-    var form = $('form');
-    var patternHidden = /(\D)+[^0-9]{2,}/i;
-    var patternText = /(\D)+[^0-9]{2,}/i;
-    var patternEmail = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
-    var patternTel = /([+()0-9 ]){9,18}/i;
-    var errorFieldsMessage = {
-        text: ' Name (text fields)',
-        tel: ' Phone',
-        email: ' Email',
-    };
-
-    function validationsField(field) {
-
-        var fieldValue = field[0].value;
-        var fieldType = field[0].type;
-
-        if (fieldType === 'email') {
-            var pattern = patternEmail;
-        } else if (fieldType === 'text') {
-            var pattern = patternText;
-        } else if (fieldType === 'tel') {
-
-            if (fieldValue.match(/[^0-9]/g)) {
-                console.log(fieldValue.match(/[^0-9]/g));
-                fieldValue = fieldValue.replace(/[^0-9]/g, ' d');
-            }
-            var pattern = patternTel;
-        } else if (fieldType == 'hidden') {
-            return true;
-        }
-        return pattern.test(fieldValue);
-    }
-
-    function validationsForm(form) {
-
-        var fields = form.find('input:not([type=radio])');
-        var errorTags = form.find('.error-message');
-        var numberIsValid = 0;
-        var errorMessage = [];
-
-        fields.each(function() {
-            var field = $(this);
-            var errorFieldType = field[0].type;
-            if (validationsField(field)) {
-                field.removeClass('error').addClass('accept');
-                numberIsValid++;
-            } else {
-                if (errorFieldType == 'text') {
-                    errorMessage.push(errorFieldsMessage.text);
-                } else if (errorFieldType == 'tel') {
-                    errorMessage.push(errorFieldsMessage.tel);
-                } else if (errorFieldType == 'email') {
-                    errorMessage.push(errorFieldsMessage.email);
-                }
-                field.addClass('error');
-            }
-
-        });
-
-        errorMessage.length > 0 ? errorTags.html('Err: <br><b>' + errorMessage + '</b>') : null;
-        return fields.length == numberIsValid;
-
-    }
-
-    function keyupEventOff(e) {
-        if (e.target.value === '') {
-            $(this).removeClass('active');
-        }
-    }
-
-    function keyupEvent(e) {
-        var field = $(this);
-
-        field.addClass('active');
-
-        var errorTags = field.closest('form').find('.error-message');
-        errorTags.html('');
-
-        field.hasClass('error') ? field.removeClass('error') : false;
-        validationsField(field) ? field.addClass('accept') : field.removeClass('accept');
-
-    }
-
-    function submitForm() {
-
-        var me = $(this);
-        var dataFields = me.find('input');
-        var btnSubmit = form.find('[type=submit]');
-
-        if (validationsForm(me)) {
-
-            var l_v = me.find('input[name=l_v]');
-            l_v.val(AMOPIXEL_IDENTIFIER.getVisitorUid());
-
-            me.addClass('send');
-
-            btnSubmit.attr('disabled', true);
-
-            localStorage.ue = me.find('input[name=email]').val();
-            localStorage.un = me.find('input[name=name]').val();
-            localStorage.up = me.find('input[name=phone]').val();
-
-            var fieldsData = me.serialize();
-            me.removeClass('send');
-            me[0].reset();
-            dataFields.removeClass('active').removeClass('accept');
-            window.location.href = 'http://localhost:3000/go.ddd';
-
-        }
-    }
-
-    input.keyup(keyupEvent).focus(keyupEvent).focusout(keyupEventOff);
-    form.submit(submitForm);
-
 });
